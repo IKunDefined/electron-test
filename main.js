@@ -1,4 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const {
+app,
+BrowserWindow,
+ipcMain
+} = require('electron')
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -9,6 +13,7 @@ function createWindow () {
     }
   })
   win.loadFile('index.html')
+  win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
@@ -23,4 +28,8 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
+})
+
+ipcMain.on('renderer-message', () => {
+  console.log(123232)
 })
